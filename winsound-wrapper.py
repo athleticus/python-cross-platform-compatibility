@@ -19,6 +19,8 @@ except ImportError:
         SND_FILENAME = 0b00000001
         SND_ASYNC = 0b00000010
 
+        _sounds = []
+
         @staticmethod
         def Beep(frequency, duration):
             subprocess.run(['play',
@@ -30,11 +32,25 @@ except ImportError:
 
         @classmethod
         def PlaySound(cls, sound, flags):
+            if sound is None:
+                return cls._clear()
+
             if not(flags & cls.SND_FILENAME):
                 raise NotImplementedError("PlaySound wrapper only supports playing sound files.")
 
             cmd = subprocess.Popen if flags & cls.SND_ASYNC else subprocess.run
-            cmd(['afplay', sound])
+            p = cmd(['afplay', sound])
+
+            if flags & cls.SND_ASYNC:
+                cls._sounds.append(p)
+
+        @classmethod
+        def _clear(cls):
+            for sound in cls._sounds:
+                sound.kill()
+
+            cls.sounds = []
+
 
 
 
