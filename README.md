@@ -1,6 +1,8 @@
 # Python Cross Platform Compatibility
 Workarounds for platform dependent Python code (WIP). 
 
+Inspired by students of [CSSE1001 @ The University of Queensland](https://csse1001.uqcloud.net/) submitting Python assignments with Windows only features that cause trouble for markers using Mac OS X/Linux.
+
 ## Library Wrappers
 
 ### winsound
